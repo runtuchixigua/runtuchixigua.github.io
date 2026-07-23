@@ -9,6 +9,16 @@
       content="Yucheng Ji — AI Engineer, LLM systems and knowledge intelligence."
     />
     <title>Yucheng Ji · AI Systems Engineer</title>
+    <script>
+      (() => {
+        let savedTheme = null;
+        try { savedTheme = localStorage.getItem("theme"); } catch {}
+        const systemTheme = typeof matchMedia === "function"
+          ? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+          : "light";
+        document.documentElement.dataset.theme = savedTheme || systemTheme;
+      })();
+    </script>
     <style>
       @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Syne:wght@600;700&display=swap");
 
@@ -18,6 +28,7 @@
         --cyan: #71e6ff;
         --blue: #748bff;
         --void: #03050c;
+        color-scheme: dark;
       }
 
       * { box-sizing: border-box; }
@@ -443,6 +454,209 @@
         transform: translateX(-50%);
       }
 
+      .theme-toggle {
+        position: fixed;
+        top: 24px;
+        right: 24px;
+        z-index: 40;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        overflow: hidden;
+        border: 1px solid rgba(148, 169, 214, .18);
+        border-radius: 50%;
+        background: rgba(5, 8, 17, .7);
+        color: #dce7ff;
+        backdrop-filter: blur(18px);
+        cursor: pointer;
+        transition: transform .3s, border-color .3s, background-color .3s, color .3s;
+      }
+
+      .theme-toggle:hover {
+        transform: rotate(12deg) scale(1.06);
+        border-color: rgba(113, 230, 255, .55);
+      }
+
+      .theme-toggle svg {
+        position: absolute;
+        inset: 13px;
+        width: 20px;
+        height: 20px;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 1.5;
+        transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .35s;
+      }
+
+      .theme-toggle .sun {
+        opacity: 0;
+        transform: rotate(-70deg) scale(.4);
+      }
+
+      .theme-toggle .moon {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+
+      html[data-theme="light"] {
+        --ink: #17202b;
+        --muted: #66717f;
+        --cyan: #087f8c;
+        --blue: #435f92;
+        --void: #f3f1eb;
+        color-scheme: light;
+      }
+
+      html[data-theme="light"] body::after {
+        opacity: .025;
+        mix-blend-mode: multiply;
+      }
+
+      html[data-theme="light"] #stars {
+        opacity: .2;
+        filter: sepia(.45) saturate(.7);
+      }
+
+      html[data-theme="light"] .nebula {
+        background:
+          radial-gradient(circle at 75% 36%, rgba(66, 131, 160, .11), transparent 33%),
+          radial-gradient(circle at 8% 88%, rgba(203, 170, 103, .10), transparent 29%),
+          linear-gradient(115deg, transparent 30%, rgba(76, 88, 108, .035) 52%, transparent 70%);
+      }
+
+      html[data-theme="light"] .eyebrow { color: #087f8c; }
+
+      html[data-theme="light"] h1 span {
+        -webkit-text-stroke-color: rgba(23, 32, 43, .42);
+      }
+
+      html[data-theme="light"] .role { color: #47515e; }
+
+      html[data-theme="light"] .meta span::before { color: #a5aeb7; }
+
+      html[data-theme="light"] .sphere-wrap::before {
+        border-color: rgba(48, 88, 105, .13);
+        background:
+          radial-gradient(circle at 37% 31%, rgba(87, 177, 181, .13), transparent 19%),
+          radial-gradient(circle at 62% 68%, rgba(83, 107, 160, .08), transparent 30%),
+          radial-gradient(circle at 48% 44%, rgba(255, 255, 255, .6), rgba(215, 220, 216, .17) 54%, transparent 72%);
+        box-shadow:
+          inset -55px -35px 120px rgba(83, 94, 115, .08),
+          inset 35px 24px 100px rgba(255, 255, 255, .5),
+          0 0 130px rgba(80, 107, 119, .08);
+      }
+
+      html[data-theme="light"] .sphere-wrap::after {
+        border-color: rgba(40, 92, 104, .13);
+      }
+
+      html[data-theme="light"] .skill { color: #263744; }
+
+      html[data-theme="light"] .skill:hover,
+      html[data-theme="light"] .skill.focused {
+        color: #0a5962;
+        border-color: rgba(8, 127, 140, .38);
+        background: rgba(250, 250, 247, .9);
+        box-shadow: 0 12px 30px rgba(33, 66, 74, .12);
+      }
+
+      html[data-theme="light"] .hint { color: #8a9299; }
+
+      html[data-theme="light"] .hint i { border-color: #bdc3c4; }
+
+      html[data-theme="light"] .hint i::after { border-color: #929fa2; }
+
+      html[data-theme="light"] .page-tabs a {
+        border-color: rgba(44, 57, 68, .13);
+        background: rgba(244, 242, 236, .78);
+        color: #899198;
+      }
+
+      html[data-theme="light"] .page-tabs a:hover,
+      html[data-theme="light"] .page-tabs a.active {
+        color: #087f8c;
+        border-color: rgba(8, 127, 140, .35);
+      }
+
+      html[data-theme="light"] .archive-page {
+        border-color: rgba(34, 44, 51, .14);
+        background:
+          linear-gradient(90deg, rgba(38,45,49,.035), transparent 3%, transparent 97%, rgba(38,45,49,.025)),
+          radial-gradient(circle at 82% 8%, rgba(92, 138, 149, .09), transparent 35%),
+          linear-gradient(135deg, #faf9f5, #efede6);
+        box-shadow:
+          -22px 18px 50px rgba(37, 42, 44, .11),
+          0 45px 100px rgba(47, 50, 49, .14),
+          inset 18px 0 28px rgba(38, 45, 49, .025);
+      }
+
+      html[data-theme="light"] .archive-page::before {
+        background: linear-gradient(transparent, rgba(56, 69, 73, .18) 16%, rgba(56, 69, 73, .18) 84%, transparent);
+        box-shadow: 7px 0 22px rgba(48, 52, 53, .11);
+      }
+
+      html[data-theme="light"] .archive-page::after { color: rgba(46, 58, 62, .28); }
+      html[data-theme="light"] .archive-kicker { color: #718087; }
+      html[data-theme="light"] .archive-title em {
+        -webkit-text-stroke-color: rgba(23, 32, 43, .45);
+      }
+      html[data-theme="light"] .archive-intro { color: #5c6870; }
+      html[data-theme="light"] .archive-grid {
+        border-color: rgba(49, 61, 66, .13);
+        background: rgba(49, 61, 66, .13);
+      }
+      html[data-theme="light"] .archive-card { background: rgba(249, 248, 243, .96); }
+      html[data-theme="light"] .archive-card:hover { background: #fff; }
+      html[data-theme="light"] .archive-card p { color: #68737a; }
+      html[data-theme="light"] .legacy-tags span {
+        border-color: rgba(8, 127, 140, .2);
+        color: #58666d;
+      }
+      html[data-theme="light"] .page-cue { color: #969d9f; }
+
+      html[data-theme="light"] .theme-toggle {
+        border-color: rgba(32, 45, 52, .18);
+        background: rgba(247, 246, 241, .78);
+        color: #24313a;
+      }
+
+      html[data-theme="light"] .theme-toggle .sun {
+        opacity: 1;
+        transform: rotate(0) scale(1);
+      }
+
+      html[data-theme="light"] .theme-toggle .moon {
+        opacity: 0;
+        transform: rotate(70deg) scale(.4);
+      }
+
+      html.theme-fade body {
+        animation: theme-fade .5s ease both;
+      }
+
+      ::view-transition-old(root),
+      ::view-transition-new(root) {
+        animation: none;
+        mix-blend-mode: normal;
+      }
+
+      ::view-transition-new(root) {
+        clip-path: circle(0 at var(--theme-x) var(--theme-y));
+        animation: theme-reveal .72s cubic-bezier(.2,.75,.2,1) forwards;
+      }
+
+      ::view-transition-old(root) { z-index: 1; }
+      ::view-transition-new(root) { z-index: 9999; }
+
+      @keyframes theme-reveal {
+        to { clip-path: circle(150vmax at var(--theme-x) var(--theme-y)); }
+      }
+
+      @keyframes theme-fade {
+        0%, 100% { opacity: 1; }
+        45% { opacity: .72; }
+      }
+
       @keyframes reveal {
         from { opacity: 0; transform: translateY(24px); }
       }
@@ -485,6 +699,15 @@
   <body>
     <canvas id="stars" aria-hidden="true"></canvas>
     <div class="nebula" aria-hidden="true"></div>
+    <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
+      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="3.5"></circle>
+        <path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
+      </svg>
+      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 15.1A8.6 8.6 0 0 1 8.9 4a8.6 8.6 0 1 0 11.1 11.1Z"></path>
+      </svg>
+    </button>
     <nav class="page-tabs" aria-label="Page navigation">
       <a href="#cover" class="active" aria-label="Go to cover">01</a>
       <a href="#archive" aria-label="Go to archive">02</a>
@@ -575,6 +798,44 @@
       const points = [];
       const goldenAngle = Math.PI * (3 - Math.sqrt(5));
       const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const themeToggle = document.getElementById("theme-toggle");
+
+      function syncThemeLabel() {
+        const currentTheme = document.documentElement.dataset.theme;
+        const nextTheme = currentTheme === "dark" ? "light" : "dark";
+        themeToggle.setAttribute("aria-label", `Switch to ${nextTheme} theme`);
+        themeToggle.title = `Switch to ${nextTheme} theme`;
+      }
+
+      function setTheme(theme, remember = true) {
+        document.documentElement.dataset.theme = theme;
+        if (remember) {
+          try { localStorage.setItem("theme", theme); } catch {}
+        }
+        syncThemeLabel();
+      }
+
+      themeToggle.addEventListener("click", event => {
+        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        document.documentElement.style.setProperty("--theme-x", `${event.clientX}px`);
+        document.documentElement.style.setProperty("--theme-y", `${event.clientY}px`);
+
+        if (!reduceMotion && document.startViewTransition) {
+          document.startViewTransition(() => setTheme(nextTheme));
+        } else {
+          document.documentElement.classList.add("theme-fade");
+          setTheme(nextTheme);
+          setTimeout(() => document.documentElement.classList.remove("theme-fade"), 520);
+        }
+      });
+
+      const systemColor = matchMedia("(prefers-color-scheme: dark)");
+      systemColor.addEventListener("change", event => {
+        let hasSavedTheme = false;
+        try { hasSavedTheme = Boolean(localStorage.getItem("theme")); } catch {}
+        if (!hasSavedTheme) setTheme(event.matches ? "dark" : "light", false);
+      });
+      syncThemeLabel();
 
       technologies.forEach((label, index) => {
         const y = 1 - (index / (technologies.length - 1)) * 2;
