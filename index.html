@@ -9,6 +9,7 @@
       content="Yucheng Ji — AI Engineer, LLM systems and knowledge intelligence."
     />
     <title>Yucheng Ji · AI Systems Engineer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script>
       (() => {
         let savedTheme = null;
@@ -635,31 +636,138 @@
       html[data-theme="light"] .theme-option.light { color: #fff; }
       html[data-theme="light"] .theme-option.dark { color: #768088; }
 
-      html.theme-fade body {
-        animation: theme-fade .5s ease both;
+      .legacy-app { display: none; }
+
+      html[data-theme="light"] #stars,
+      html[data-theme="light"] .nebula,
+      html[data-theme="light"] .page-tabs,
+      html[data-theme="light"] main,
+      html[data-theme="light"] .book-stage {
+        display: none;
       }
 
-      ::view-transition-old(root),
-      ::view-transition-new(root) {
-        animation: none;
-        mix-blend-mode: normal;
+      html[data-theme="light"] .legacy-app {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+          Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
       }
 
-      ::view-transition-new(root) {
-        clip-path: circle(0 at var(--theme-x) var(--theme-y));
-        animation: theme-reveal .72s cubic-bezier(.2,.75,.2,1) forwards;
+      .legacy-background {
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background:
+          linear-gradient(rgba(255,255,255,.7), rgba(255,255,255,.7)),
+          url("/assets/cow-Djf-hwUp.png") center / cover no-repeat;
       }
 
-      ::view-transition-old(root) { z-index: 1; }
-      ::view-transition-new(root) { z-index: 9999; }
-
-      @keyframes theme-reveal {
-        to { clip-path: circle(150vmax at var(--theme-x) var(--theme-y)); }
+      .legacy-content {
+        width: 100%;
+        max-width: 800px;
+        padding: 40px;
       }
 
-      @keyframes theme-fade {
-        0%, 100% { opacity: 1; }
-        45% { opacity: .72; }
+      .legacy-header {
+        margin-bottom: 40px;
+        text-align: center;
+      }
+
+      .legacy-avatar {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 20px;
+        border: 4px solid #fff;
+        border-radius: 50%;
+        object-fit: cover;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,.15);
+      }
+
+      .legacy-name {
+        margin: 0 0 10px;
+        color: #333;
+        font: 700 2.5rem/1.1 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        letter-spacing: -.03em;
+      }
+
+      .legacy-bio {
+        margin: 0;
+        color: #666;
+        font-size: 1.1rem;
+      }
+
+      .legacy-section { margin-bottom: 30px; }
+
+      .legacy-section-title {
+        margin: 0 0 15px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e0e0e0;
+        color: #333;
+        font-size: 1.5rem;
+      }
+
+      .classic-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .classic-tag {
+        padding: 8px 16px;
+        border-radius: 20px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: #fff;
+        font-size: .9rem;
+        font-weight: 500;
+        box-shadow: 0 4px 12px rgba(102, 126, 234, .18);
+        transition: transform .2s ease, box-shadow .2s ease;
+      }
+
+      .classic-tag:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 7px 18px rgba(102, 126, 234, .28);
+      }
+
+      .legacy-placeholder {
+        padding: 30px;
+        border-radius: 12px;
+        background: rgba(255,255,255,.28);
+        color: #555;
+        text-align: center;
+        font-size: 1rem;
+        font-style: italic;
+        backdrop-filter: blur(8px);
+      }
+
+      .theme-curtain {
+        position: fixed;
+        top: 0;
+        z-index: 10000;
+        width: 50.5vw;
+        height: 100vh;
+        pointer-events: none;
+        background: var(--curtain-color, #f3f1eb);
+        transform: scaleX(0);
+        will-change: transform;
+      }
+
+      .theme-curtain.left {
+        left: 0;
+        transform-origin: left center;
+      }
+
+      .theme-curtain.right {
+        right: 0;
+        transform-origin: right center;
       }
 
       @keyframes reveal {
@@ -694,6 +802,15 @@
         .page-tabs a.active { width: 44px; }
       }
 
+      @media (max-width: 600px) {
+        html[data-theme="light"] .legacy-app { padding: 72px 20px 24px; }
+        .legacy-content { padding: 20px; }
+        .legacy-name { font-size: 2rem; }
+        .legacy-avatar { width: 120px; height: 120px; }
+        .legacy-section-title { font-size: 1.3rem; }
+        .theme-toggle { top: 16px; right: 16px; }
+      }
+
       @media (prefers-reduced-motion: reduce) {
         .identity, .sphere-wrap { animation: none; }
         .hint i::after { animation: none; }
@@ -708,6 +825,45 @@
       <span class="theme-option light">LIGHT</span>
       <span class="theme-option dark">DARK</span>
     </button>
+    <div class="theme-curtain left" aria-hidden="true"></div>
+    <div class="theme-curtain right" aria-hidden="true"></div>
+
+    <div class="legacy-app" id="legacy">
+      <div class="legacy-background" aria-hidden="true"></div>
+      <div class="legacy-content">
+        <header class="legacy-header">
+          <img
+            class="legacy-avatar"
+            src="https://raw.githubusercontent.com/runtuchixigua/runtuchixigua.github.io/b1261f3d62c4c9f1ffa6ab6da34fa4a6d58fc88b/assets/%E9%A9%AC%E5%A4%B4-BjjZ4yBk.png"
+            alt="Yucheng Ji"
+          />
+          <h1 class="legacy-name">Yucheng Ji</h1>
+          <p class="legacy-bio">Full-stack Developer · Open-source Enthusiast</p>
+        </header>
+
+        <section class="legacy-section">
+          <h2 class="legacy-section-title">Technical Stack</h2>
+          <div class="classic-tags">
+            <span class="classic-tag">ML</span>
+            <span class="classic-tag">DL</span>
+            <span class="classic-tag">KG</span>
+            <span class="classic-tag">RAG</span>
+            <span class="classic-tag">Overtime</span>
+          </div>
+        </section>
+
+        <section class="legacy-section">
+          <h2 class="legacy-section-title">Projects</h2>
+          <div class="legacy-placeholder">Still enjoying Shenzhen specialties — updates coming soon.</div>
+        </section>
+
+        <section class="legacy-section">
+          <h2 class="legacy-section-title">Technical Blog</h2>
+          <div class="legacy-placeholder">Notes are being prepared for publication.</div>
+        </section>
+      </div>
+    </div>
+
     <nav class="page-tabs" aria-label="Page navigation">
       <a href="#cover" class="active" aria-label="Go to cover">01</a>
       <a href="#archive" aria-label="Go to archive">02</a>
@@ -799,6 +955,7 @@
       const goldenAngle = Math.PI * (3 - Math.sqrt(5));
       const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
       const themeToggle = document.getElementById("theme-toggle");
+      let themeTransitioning = false;
 
       function syncThemeLabel() {
         const currentTheme = document.documentElement.dataset.theme;
@@ -815,18 +972,60 @@
         syncThemeLabel();
       }
 
-      themeToggle.addEventListener("click", event => {
-        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-        document.documentElement.style.setProperty("--theme-x", `${event.clientX}px`);
-        document.documentElement.style.setProperty("--theme-y", `${event.clientY}px`);
+      function runThemeTransition(nextTheme) {
+        if (themeTransitioning) return;
+        themeTransitioning = true;
+        const curtains = [...document.querySelectorAll(".theme-curtain")];
+        const curtainColor = nextTheme === "light" ? "#f3f1eb" : "#03050c";
+        curtains.forEach(curtain => curtain.style.backgroundColor = curtainColor);
 
-        if (!reduceMotion && document.startViewTransition) {
-          document.startViewTransition(() => setTheme(nextTheme));
-        } else {
-          document.documentElement.classList.add("theme-fade");
+        const switchPage = () => {
           setTheme(nextTheme);
-          setTimeout(() => document.documentElement.classList.remove("theme-fade"), 520);
+          scrollTo(0, 0);
+        };
+
+        if (reduceMotion) {
+          switchPage();
+          themeTransitioning = false;
+          return;
         }
+
+        if (window.gsap) {
+          const [leftCurtain, rightCurtain] = curtains;
+          gsap.killTweensOf(curtains);
+          gsap.set(leftCurtain, { scaleX: 0, transformOrigin: "left center" });
+          gsap.set(rightCurtain, { scaleX: 0, transformOrigin: "right center" });
+          gsap.timeline()
+            .to(curtains, { scaleX: 1, duration: .42, ease: "power4.inOut" })
+            .call(switchPage)
+            .set(leftCurtain, { transformOrigin: "right center" })
+            .set(rightCurtain, { transformOrigin: "left center" })
+            .to(curtains, { scaleX: 0, duration: .58, ease: "power4.out" })
+            .call(() => { themeTransitioning = false; });
+          return;
+        }
+
+        const closing = curtains.map(curtain => curtain.animate(
+          [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+          { duration: 420, easing: "cubic-bezier(.7,0,.3,1)", fill: "forwards" }
+        ));
+        Promise.all(closing.map(animation => animation.finished)).then(() => {
+          switchPage();
+          curtains[0].style.transformOrigin = "right center";
+          curtains[1].style.transformOrigin = "left center";
+          const opening = curtains.map(curtain => curtain.animate(
+            [{ transform: "scaleX(1)" }, { transform: "scaleX(0)" }],
+            { duration: 580, easing: "cubic-bezier(.2,.8,.2,1)", fill: "forwards" }
+          ));
+          Promise.all(opening.map(animation => animation.finished)).then(() => {
+            themeTransitioning = false;
+          });
+        });
+      }
+
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+        runThemeTransition(nextTheme);
       });
 
       const systemColor = matchMedia("(prefers-color-scheme: dark)");
