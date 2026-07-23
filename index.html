@@ -459,44 +459,51 @@
         top: 24px;
         right: 24px;
         z-index: 40;
-        width: 48px;
-        height: 48px;
-        padding: 0;
+        width: 154px;
+        height: 44px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        padding: 4px;
         overflow: hidden;
-        border: 1px solid rgba(148, 169, 214, .18);
-        border-radius: 50%;
-        background: rgba(5, 8, 17, .7);
-        color: #dce7ff;
+        border: 1px solid rgba(148, 169, 214, .28);
+        border-radius: 999px;
+        background: rgba(5, 8, 17, .82);
+        color: #768199;
         backdrop-filter: blur(18px);
+        box-shadow: 0 12px 34px rgba(0, 0, 0, .2);
         cursor: pointer;
-        transition: transform .3s, border-color .3s, background-color .3s, color .3s;
+        transition: transform .3s, border-color .3s, background-color .3s, box-shadow .3s;
       }
 
       .theme-toggle:hover {
-        transform: rotate(12deg) scale(1.06);
+        transform: translateY(-2px);
         border-color: rgba(113, 230, 255, .55);
       }
 
-      .theme-toggle svg {
+      .theme-toggle::before {
+        content: "";
         position: absolute;
-        inset: 13px;
-        width: 20px;
-        height: 20px;
-        fill: none;
-        stroke: currentColor;
-        stroke-width: 1.5;
-        transition: transform .55s cubic-bezier(.2,.8,.2,1), opacity .35s;
+        left: 4px;
+        top: 4px;
+        width: 72px;
+        height: 34px;
+        border-radius: 999px;
+        background: #f3f5f8;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, .28);
+        transform: translateX(72px);
+        transition: transform .55s cubic-bezier(.2,.8,.2,1), background-color .35s;
       }
 
-      .theme-toggle .sun {
-        opacity: 0;
-        transform: rotate(-70deg) scale(.4);
+      .theme-option {
+        position: relative;
+        z-index: 1;
+        font: 500 9px/1 "DM Mono", monospace;
+        letter-spacing: .13em;
+        transition: color .35s;
       }
 
-      .theme-toggle .moon {
-        opacity: 1;
-        transform: rotate(0) scale(1);
-      }
+      .theme-option.dark { color: #111923; }
 
       html[data-theme="light"] {
         --ink: #17202b;
@@ -615,20 +622,18 @@
       html[data-theme="light"] .page-cue { color: #969d9f; }
 
       html[data-theme="light"] .theme-toggle {
-        border-color: rgba(32, 45, 52, .18);
-        background: rgba(247, 246, 241, .78);
-        color: #24313a;
+        border-color: rgba(32, 45, 52, .26);
+        background: rgba(247, 246, 241, .9);
+        box-shadow: 0 12px 34px rgba(49, 52, 50, .12);
       }
 
-      html[data-theme="light"] .theme-toggle .sun {
-        opacity: 1;
-        transform: rotate(0) scale(1);
+      html[data-theme="light"] .theme-toggle::before {
+        background: #17202b;
+        transform: translateX(0);
       }
 
-      html[data-theme="light"] .theme-toggle .moon {
-        opacity: 0;
-        transform: rotate(70deg) scale(.4);
-      }
+      html[data-theme="light"] .theme-option.light { color: #fff; }
+      html[data-theme="light"] .theme-option.dark { color: #768088; }
 
       html.theme-fade body {
         animation: theme-fade .5s ease both;
@@ -700,13 +705,8 @@
     <canvas id="stars" aria-hidden="true"></canvas>
     <div class="nebula" aria-hidden="true"></div>
     <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch color theme">
-      <svg class="sun" viewBox="0 0 24 24" aria-hidden="true">
-        <circle cx="12" cy="12" r="3.5"></circle>
-        <path d="M12 2v2.2M12 19.8V22M4.93 4.93l1.56 1.56M17.51 17.51l1.56 1.56M2 12h2.2M19.8 12H22M4.93 19.07l1.56-1.56M17.51 6.49l1.56-1.56"></path>
-      </svg>
-      <svg class="moon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M20 15.1A8.6 8.6 0 0 1 8.9 4a8.6 8.6 0 1 0 11.1 11.1Z"></path>
-      </svg>
+      <span class="theme-option light">LIGHT</span>
+      <span class="theme-option dark">DARK</span>
     </button>
     <nav class="page-tabs" aria-label="Page navigation">
       <a href="#cover" class="active" aria-label="Go to cover">01</a>
