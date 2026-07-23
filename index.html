@@ -1,14 +1,446 @@
 <!doctype html>
-<html lang="zh-CN">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GitHub 个人主页</title>
-    <script type="module" crossorigin src="/assets/index-DMmR17S3.js"></script>
-    <link rel="stylesheet" crossorigin href="/assets/index-DM6RM1hf.css">
+    <meta name="theme-color" content="#03050c" />
+    <meta
+      name="description"
+      content="Runtuchixigua — AI Engineer, LLM systems and knowledge intelligence."
+    />
+    <title>Runtuchixigua · AI Systems Engineer</title>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Manrope:wght@300;400;500;600&family=Syne:wght@600;700&display=swap");
+
+      :root {
+        --ink: #f5f7ff;
+        --muted: #8991aa;
+        --cyan: #71e6ff;
+        --blue: #748bff;
+        --void: #03050c;
+      }
+
+      * { box-sizing: border-box; }
+
+      html, body {
+        margin: 0;
+        min-height: 100%;
+        background: var(--void);
+        color: var(--ink);
+      }
+
+      body {
+        overflow-x: hidden;
+        font-family: "Manrope", sans-serif;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 20;
+        pointer-events: none;
+        opacity: .035;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.7'/%3E%3C/svg%3E");
+      }
+
+      #stars, .nebula {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+      }
+
+      #stars { z-index: 0; }
+
+      .nebula {
+        z-index: 1;
+        background:
+          radial-gradient(circle at 72% 42%, rgba(39, 76, 165, .17), transparent 34%),
+          radial-gradient(circle at 12% 86%, rgba(38, 139, 163, .10), transparent 27%),
+          linear-gradient(110deg, transparent 30%, rgba(47, 54, 100, .055) 50%, transparent 70%);
+      }
+
+      main {
+        position: relative;
+        z-index: 2;
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: minmax(290px, .76fr) minmax(520px, 1.24fr);
+        align-items: center;
+        gap: 2vw;
+        padding: clamp(30px, 6vw, 92px);
+      }
+
+      .identity {
+        max-width: 620px;
+        animation: reveal .9s cubic-bezier(.2,.8,.2,1) both;
+      }
+
+      .eyebrow {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 30px;
+        color: var(--cyan);
+        font: 500 11px/1 "DM Mono", monospace;
+        letter-spacing: .22em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 30px;
+        height: 1px;
+        background: currentColor;
+        box-shadow: 0 0 12px currentColor;
+      }
+
+      h1 {
+        margin: 0;
+        font: 700 clamp(52px, 7.6vw, 112px)/.82 "Syne", sans-serif;
+        letter-spacing: -.065em;
+      }
+
+      h1 span {
+        display: block;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(213, 225, 255, .55);
+      }
+
+      .role {
+        margin: 34px 0 0;
+        color: #c8cee0;
+        font-size: clamp(15px, 1.45vw, 21px);
+        font-weight: 300;
+        letter-spacing: .015em;
+      }
+
+      .role em { color: var(--cyan); font-style: normal; }
+
+      .meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 24px;
+        margin-top: 42px;
+        color: var(--muted);
+        font: 400 10px/1.4 "DM Mono", monospace;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+      }
+
+      .meta span::before {
+        content: "◆";
+        margin-right: 9px;
+        color: #465272;
+        font-size: 6px;
+        vertical-align: 2px;
+      }
+
+      .sphere-wrap {
+        position: relative;
+        width: min(62vw, 820px);
+        aspect-ratio: 1;
+        justify-self: end;
+        user-select: none;
+        touch-action: none;
+        animation: sphere-in 1.2s .1s cubic-bezier(.2,.8,.2,1) both;
+      }
+
+      .sphere-wrap::before,
+      .sphere-wrap::after {
+        content: "";
+        position: absolute;
+        border-radius: 50%;
+        pointer-events: none;
+      }
+
+      .sphere-wrap::before {
+        inset: 10%;
+        border: 1px solid rgba(120, 184, 255, .10);
+        background: radial-gradient(circle at 42% 38%, rgba(100, 176, 255, .09), rgba(4, 9, 22, .18) 47%, transparent 70%);
+        box-shadow: inset -30px -20px 80px rgba(16, 31, 79, .12), 0 0 100px rgba(45, 86, 180, .08);
+      }
+
+      .sphere-wrap::after {
+        inset: 18%;
+        border: 1px dashed rgba(126, 224, 255, .07);
+        transform: rotate(28deg) scaleY(.34);
+      }
+
+      .orbit {
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+
+      .skill {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        padding: 7px 10px;
+        border: 1px solid transparent;
+        color: #dce9ff;
+        white-space: nowrap;
+        font: 400 clamp(9px, .78vw, 12px)/1 "DM Mono", monospace;
+        letter-spacing: .04em;
+        transform: translate(-50%, -50%);
+        transform-origin: center;
+        transition: color .2s, border-color .2s, background .2s, filter .2s;
+        will-change: transform, opacity;
+        cursor: crosshair;
+      }
+
+      .skill::before {
+        content: "";
+        display: inline-block;
+        width: 3px;
+        height: 3px;
+        margin-right: 7px;
+        border-radius: 50%;
+        background: currentColor;
+        box-shadow: 0 0 7px currentColor;
+        vertical-align: 2px;
+      }
+
+      .skill:hover,
+      .skill.focused {
+        z-index: 999 !important;
+        color: #fff;
+        opacity: 1 !important;
+        filter: none !important;
+        border-color: rgba(113, 230, 255, .5);
+        background: rgba(9, 17, 36, .78);
+        box-shadow: 0 0 24px rgba(72, 194, 255, .13);
+      }
+
+      .hint {
+        position: absolute;
+        right: 5%;
+        bottom: 8%;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #59637c;
+        font: 400 9px/1 "DM Mono", monospace;
+        letter-spacing: .16em;
+        text-transform: uppercase;
+      }
+
+      .hint i {
+        width: 32px;
+        height: 32px;
+        border: 1px solid #313a52;
+        border-radius: 50%;
+        position: relative;
+      }
+
+      .hint i::after {
+        content: "";
+        position: absolute;
+        inset: 8px;
+        border: 1px dashed #53617d;
+        border-radius: 50%;
+        animation: spin 4s linear infinite;
+      }
+
+      @keyframes reveal {
+        from { opacity: 0; transform: translateY(24px); }
+      }
+
+      @keyframes sphere-in {
+        from { opacity: 0; transform: scale(.9) rotate(-3deg); }
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      @media (max-width: 900px) {
+        main {
+          grid-template-columns: 1fr;
+          padding: 58px 22px 20px;
+          overflow: hidden;
+        }
+        .identity { position: relative; z-index: 5; }
+        h1 { font-size: clamp(54px, 15vw, 88px); }
+        .sphere-wrap {
+          width: min(115vw, 680px);
+          justify-self: center;
+          margin: -22px -15vw 0;
+        }
+        .meta { margin-top: 28px; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .identity, .sphere-wrap { animation: none; }
+        .hint i::after { animation: none; }
+      }
+    </style>
   </head>
   <body>
-    <div id="root"></div>
+    <canvas id="stars" aria-hidden="true"></canvas>
+    <div class="nebula" aria-hidden="true"></div>
+    <main>
+      <section class="identity">
+        <div class="eyebrow">Intelligence, engineered</div>
+        <h1>Runtu<span>Xigua</span></h1>
+        <p class="role">
+          AI Systems Engineer crafting <em>LLM applications</em>, knowledge
+          intelligence and production-grade machine learning infrastructure.
+        </p>
+        <div class="meta">
+          <span>LLM Engineering</span>
+          <span>Knowledge Graphs</span>
+          <span>AI Infrastructure</span>
+        </div>
+      </section>
+
+      <section class="sphere-wrap" id="sphere" aria-label="Interactive technology constellation">
+        <div class="orbit" id="orbit"></div>
+        <div class="hint"><i></i> Hover to explore</div>
+      </section>
+    </main>
+
+    <script>
+      const technologies = [
+        "Transformer Architecture", "Attention Mechanism", "LoRA", "Adapter Tuning",
+        "Model Quantization", "Knowledge Distillation", "Function Calling", "MCP",
+        "Autonomous Agents", "Entity Extraction", "Relation Extraction", "Knowledge Graphs",
+        "Neo4j", "Cypher", "PageRank", "Betweenness Centrality", "Louvain Community",
+        "Convolutional Networks", "Recurrent Networks", "LSTM", "BERT",
+        "Decision Trees", "Random Forest", "Gradient Boosting", "Text Classification",
+        "Named Entity Recognition", "Retrieval-Augmented Generation", "Context Engineering",
+        "Prompt Orchestration", "Vector Embeddings", "Semantic Retrieval", "n8n",
+        "Dify", "PyTorch", "Hugging Face", "FastAPI", "Flask", "Linux",
+        "Docker", "Milvus", "Redis", "MySQL", "PostgreSQL", "OceanBase"
+      ];
+
+      const sphere = document.getElementById("sphere");
+      const orbit = document.getElementById("orbit");
+      const nodes = [];
+      const points = [];
+      const goldenAngle = Math.PI * (3 - Math.sqrt(5));
+      const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+      technologies.forEach((label, index) => {
+        const y = 1 - (index / (technologies.length - 1)) * 2;
+        const radius = Math.sqrt(1 - y * y);
+        const theta = goldenAngle * index;
+        points.push({ x: Math.cos(theta) * radius, y, z: Math.sin(theta) * radius });
+
+        const node = document.createElement("span");
+        node.className = "skill";
+        node.textContent = label;
+        node.setAttribute("role", "listitem");
+        node.addEventListener("mouseenter", () => node.classList.add("focused"));
+        node.addEventListener("mouseleave", () => node.classList.remove("focused"));
+        orbit.appendChild(node);
+        nodes.push(node);
+      });
+
+      let rotationX = -.12;
+      let rotationY = .25;
+      let velocityX = .00022;
+      let velocityY = .00048;
+      let pointerX = 0;
+      let pointerY = 0;
+      let pointerActive = false;
+      let hovering = false;
+      let lastTime = performance.now();
+
+      sphere.addEventListener("pointerenter", () => { hovering = true; });
+      sphere.addEventListener("pointerleave", () => {
+        hovering = false;
+        pointerActive = false;
+      });
+      sphere.addEventListener("pointermove", (event) => {
+        const rect = sphere.getBoundingClientRect();
+        pointerX = (event.clientX - rect.left) / rect.width * 2 - 1;
+        pointerY = (event.clientY - rect.top) / rect.height * 2 - 1;
+        pointerActive = true;
+      });
+
+      function render(time) {
+        const dt = Math.min(time - lastTime, 32);
+        lastTime = time;
+        const overSkill = sphere.querySelector(".skill:hover");
+
+        if (!reduceMotion && !overSkill) {
+          const targetY = pointerActive ? pointerX * .00115 : .00048;
+          const targetX = pointerActive ? -pointerY * .00072 : .00022;
+          velocityY += (targetY - velocityY) * .035;
+          velocityX += (targetX - velocityX) * .035;
+          const hoverDamping = hovering ? .42 : 1;
+          rotationY += velocityY * dt * hoverDamping;
+          rotationX += velocityX * dt * hoverDamping;
+        }
+
+        const size = sphere.clientWidth;
+        const globeRadius = size * .34;
+        const cosX = Math.cos(rotationX);
+        const sinX = Math.sin(rotationX);
+        const cosY = Math.cos(rotationY);
+        const sinY = Math.sin(rotationY);
+
+        points.forEach((point, index) => {
+          const x1 = point.x * cosY - point.z * sinY;
+          const z1 = point.x * sinY + point.z * cosY;
+          const y1 = point.y * cosX - z1 * sinX;
+          const z2 = point.y * sinX + z1 * cosX;
+          const perspective = 1 + z2 * .12;
+          const x = x1 * globeRadius * perspective;
+          const y = y1 * globeRadius * perspective;
+          const depth = (z2 + 1) / 2;
+          const opacity = .13 + depth * .82;
+          const scale = .76 + depth * .27;
+          const blur = (1 - depth) * 1.15;
+          const node = nodes[index];
+
+          node.style.transform = `translate(-50%, -50%) translate(${x}px, ${y}px) scale(${scale})`;
+          node.style.opacity = opacity;
+          node.style.filter = `blur(${blur}px)`;
+          node.style.zIndex = Math.round(depth * 100);
+        });
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+
+      const canvas = document.getElementById("stars");
+      const context = canvas.getContext("2d");
+      let stars = [];
+
+      function resizeStars() {
+        const ratio = Math.min(devicePixelRatio || 1, 2);
+        canvas.width = innerWidth * ratio;
+        canvas.height = innerHeight * ratio;
+        canvas.style.width = innerWidth + "px";
+        canvas.style.height = innerHeight + "px";
+        context.setTransform(ratio, 0, 0, ratio, 0, 0);
+        const count = Math.min(240, Math.floor(innerWidth * innerHeight / 6500));
+        stars = Array.from({ length: count }, () => ({
+          x: Math.random() * innerWidth,
+          y: Math.random() * innerHeight,
+          r: Math.random() * 1.15 + .15,
+          a: Math.random() * .62 + .12,
+          phase: Math.random() * Math.PI * 2
+        }));
+      }
+
+      function drawStars(time) {
+        context.clearRect(0, 0, innerWidth, innerHeight);
+        stars.forEach(star => {
+          const twinkle = reduceMotion ? 1 : .72 + Math.sin(time * .00065 + star.phase) * .28;
+          context.beginPath();
+          context.fillStyle = `rgba(191, 215, 255, ${star.a * twinkle})`;
+          context.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+          context.fill();
+        });
+        requestAnimationFrame(drawStars);
+      }
+
+      addEventListener("resize", resizeStars);
+      resizeStars();
+      requestAnimationFrame(drawStars);
+    </script>
   </body>
 </html>
