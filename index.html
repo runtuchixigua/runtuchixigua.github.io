@@ -29,6 +29,8 @@
         color: var(--ink);
       }
 
+      html { scroll-behavior: smooth; }
+
       body {
         overflow-x: hidden;
         font-family: "Manrope", sans-serif;
@@ -256,6 +258,191 @@
         animation: spin 4s linear infinite;
       }
 
+      .page-tabs {
+        position: fixed;
+        right: 0;
+        top: 50%;
+        z-index: 30;
+        display: grid;
+        gap: 2px;
+        transform: translateY(-50%);
+      }
+
+      .page-tabs a {
+        width: 48px;
+        height: 82px;
+        display: grid;
+        place-items: center;
+        border: 1px solid rgba(140, 169, 225, .12);
+        border-right: 0;
+        border-radius: 8px 0 0 8px;
+        background: rgba(5, 8, 17, .72);
+        backdrop-filter: blur(18px);
+        color: #68728c;
+        font: 400 9px/1 "DM Mono", monospace;
+        letter-spacing: .12em;
+        text-decoration: none;
+        transition: width .35s cubic-bezier(.2,.8,.2,1), color .3s, border-color .3s;
+      }
+
+      .page-tabs a:hover,
+      .page-tabs a.active {
+        width: 58px;
+        color: var(--cyan);
+        border-color: rgba(113, 230, 255, .32);
+      }
+
+      .book-stage {
+        --page-progress: 0;
+        --page-angle: -9deg;
+        --page-y: 54px;
+        --page-opacity: .32;
+        position: relative;
+        z-index: 3;
+        min-height: 112vh;
+        padding: 10vh clamp(20px, 5vw, 78px) 8vh;
+        perspective: 1800px;
+      }
+
+      .archive-page {
+        position: relative;
+        width: min(1380px, 100%);
+        min-height: calc(100vh - 18vh);
+        margin: 0 auto;
+        padding: clamp(40px, 6vw, 92px);
+        overflow: hidden;
+        transform-origin: 50% 0;
+        transform: rotateX(var(--page-angle)) translateY(var(--page-y));
+        opacity: var(--page-opacity);
+        border: 1px solid rgba(157, 178, 222, .16);
+        border-radius: 5px 22px 22px 5px;
+        background:
+          linear-gradient(90deg, rgba(255,255,255,.035), transparent 3%, transparent 97%, rgba(255,255,255,.025)),
+          radial-gradient(circle at 80% 10%, rgba(48, 99, 166, .13), transparent 34%),
+          linear-gradient(135deg, rgba(13, 20, 36, .97), rgba(6, 10, 20, .98));
+        box-shadow:
+          -22px 18px 50px rgba(0, 0, 0, .45),
+          0 45px 100px rgba(0, 0, 0, .55),
+          inset 18px 0 28px rgba(255,255,255,.018);
+        will-change: transform, opacity;
+      }
+
+      .archive-page::before {
+        content: "";
+        position: absolute;
+        inset: 0 auto 0 18px;
+        width: 1px;
+        background: linear-gradient(transparent, rgba(154, 181, 232, .18) 16%, rgba(154, 181, 232, .18) 84%, transparent);
+        box-shadow: 7px 0 22px rgba(0, 0, 0, .6);
+      }
+
+      .archive-page::after {
+        content: "02";
+        position: absolute;
+        right: clamp(24px, 3vw, 52px);
+        top: clamp(24px, 3vw, 46px);
+        color: rgba(180, 199, 235, .22);
+        font: 300 11px/1 "DM Mono", monospace;
+        letter-spacing: .22em;
+      }
+
+      .archive-kicker {
+        margin-bottom: 18px;
+        color: #8391b1;
+        font: 400 10px/1 "DM Mono", monospace;
+        letter-spacing: .24em;
+        text-transform: uppercase;
+      }
+
+      .archive-title {
+        max-width: 900px;
+        margin: 0;
+        font: 600 clamp(42px, 6.5vw, 96px)/.92 "Syne", sans-serif;
+        letter-spacing: -.055em;
+      }
+
+      .archive-title em {
+        color: transparent;
+        font-style: normal;
+        -webkit-text-stroke: 1px rgba(203, 217, 248, .42);
+      }
+
+      .archive-intro {
+        max-width: 680px;
+        margin: 28px 0 0;
+        color: #9ba5bc;
+        font-size: clamp(14px, 1.25vw, 18px);
+        font-weight: 300;
+        line-height: 1.75;
+      }
+
+      .archive-grid {
+        display: grid;
+        grid-template-columns: 1.2fr .9fr .9fr;
+        gap: 1px;
+        margin-top: clamp(42px, 7vh, 76px);
+        border: 1px solid rgba(151, 174, 218, .12);
+        background: rgba(151, 174, 218, .12);
+      }
+
+      .archive-card {
+        min-height: 210px;
+        padding: clamp(24px, 3vw, 42px);
+        background: rgba(7, 12, 24, .9);
+        transition: background .35s, transform .35s;
+      }
+
+      .archive-card:hover {
+        position: relative;
+        z-index: 2;
+        background: rgba(13, 23, 43, .96);
+        transform: translateY(-5px);
+      }
+
+      .card-index {
+        color: var(--cyan);
+        font: 400 9px/1 "DM Mono", monospace;
+        letter-spacing: .16em;
+      }
+
+      .archive-card h3 {
+        margin: 34px 0 12px;
+        font: 600 clamp(19px, 1.8vw, 28px)/1.1 "Syne", sans-serif;
+      }
+
+      .archive-card p {
+        margin: 0;
+        color: #737e98;
+        font-size: 13px;
+        line-height: 1.7;
+      }
+
+      .legacy-tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 24px;
+      }
+
+      .legacy-tags span {
+        padding: 7px 9px;
+        border: 1px solid rgba(113, 230, 255, .14);
+        color: #9eabc7;
+        font: 400 9px/1 "DM Mono", monospace;
+        letter-spacing: .08em;
+      }
+
+      .page-cue {
+        position: absolute;
+        left: 50%;
+        bottom: 22px;
+        color: #4e5871;
+        font: 400 8px/1 "DM Mono", monospace;
+        letter-spacing: .2em;
+        text-transform: uppercase;
+        transform: translateX(-50%);
+      }
+
       @keyframes reveal {
         from { opacity: 0; transform: translateY(24px); }
       }
@@ -279,18 +466,31 @@
           margin: -38px -22vw 0;
         }
         .meta { margin-top: 28px; }
+        .archive-grid { grid-template-columns: 1fr; }
+        .archive-card { min-height: 170px; }
+        .book-stage { padding-inline: 14px; }
+        .archive-page { padding: 48px 28px; border-radius: 4px 14px 14px 4px; }
+        .page-tabs a { width: 38px; height: 64px; }
+        .page-tabs a:hover,
+        .page-tabs a.active { width: 44px; }
       }
 
       @media (prefers-reduced-motion: reduce) {
         .identity, .sphere-wrap { animation: none; }
         .hint i::after { animation: none; }
+        .archive-page { transform: none; opacity: 1; }
       }
     </style>
   </head>
   <body>
     <canvas id="stars" aria-hidden="true"></canvas>
     <div class="nebula" aria-hidden="true"></div>
-    <main>
+    <nav class="page-tabs" aria-label="Page navigation">
+      <a href="#cover" class="active" aria-label="Go to cover">01</a>
+      <a href="#archive" aria-label="Go to archive">02</a>
+    </nav>
+
+    <main id="cover">
       <section class="identity">
         <div class="eyebrow">Intelligence, engineered</div>
         <h1>Yucheng<span>Ji</span></h1>
@@ -309,7 +509,51 @@
         <div class="orbit" id="orbit"></div>
         <div class="hint"><i></i> Hover to explore</div>
       </section>
+      <div class="page-cue">Scroll to turn the page</div>
     </main>
+
+    <section class="book-stage" id="archive" aria-labelledby="archive-title">
+      <article class="archive-page">
+        <div class="archive-kicker">Archive · The earlier chapter</div>
+        <h2 class="archive-title" id="archive-title">
+          Full-stack roots.<br><em>Intelligent horizons.</em>
+        </h2>
+        <p class="archive-intro">
+          Full-stack developer and open-source enthusiast, now focused on
+          building thoughtful AI systems. This page preserves the earlier
+          chapter of the journey—the experiments, projects and writing still
+          taking shape.
+        </p>
+
+        <div class="archive-grid">
+          <article class="archive-card">
+            <span class="card-index">01 / ORIGINAL STACK</span>
+            <h3>Technical Foundations</h3>
+            <p>The compact toolkit that started this portfolio.</p>
+            <div class="legacy-tags">
+              <span>ML</span><span>DL</span><span>KG</span>
+              <span>RAG</span><span>OVERTIME</span>
+            </div>
+          </article>
+          <article class="archive-card">
+            <span class="card-index">02 / PROJECTS</span>
+            <h3>Work in Progress</h3>
+            <p>
+              Selected projects are being carefully curated. The next chapter
+              will be published soon.
+            </p>
+          </article>
+          <article class="archive-card">
+            <span class="card-index">03 / JOURNAL</span>
+            <h3>Technical Notes</h3>
+            <p>
+              Research notes, engineering decisions and field observations
+              from building practical AI systems.
+            </p>
+          </article>
+        </div>
+      </article>
+    </section>
 
     <script>
       const technologies = [
@@ -448,8 +692,31 @@
         requestAnimationFrame(drawStars);
       }
 
+      const bookStage = document.getElementById("archive");
+      const tabs = [...document.querySelectorAll(".page-tabs a")];
+      let scrollFrame;
+
+      function updatePageTurn() {
+        const rect = bookStage.getBoundingClientRect();
+        const progress = reduceMotion
+          ? 1
+          : Math.max(0, Math.min(1, (innerHeight - rect.top) / (innerHeight * .72)));
+        bookStage.style.setProperty("--page-progress", progress.toFixed(3));
+        bookStage.style.setProperty("--page-angle", `${-9 * (1 - progress)}deg`);
+        bookStage.style.setProperty("--page-y", `${54 * (1 - progress)}px`);
+        bookStage.style.setProperty("--page-opacity", (.32 + progress * .68).toFixed(3));
+        const activeIndex = rect.top < innerHeight * .48 ? 1 : 0;
+        tabs.forEach((tab, index) => tab.classList.toggle("active", index === activeIndex));
+        scrollFrame = null;
+      }
+
+      addEventListener("scroll", () => {
+        if (!scrollFrame) scrollFrame = requestAnimationFrame(updatePageTurn);
+      }, { passive: true });
       addEventListener("resize", resizeStars);
+      addEventListener("resize", updatePageTurn);
       resizeStars();
+      updatePageTurn();
       requestAnimationFrame(drawStars);
     </script>
   </body>
